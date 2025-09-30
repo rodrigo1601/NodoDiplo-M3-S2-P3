@@ -1,0 +1,36 @@
+import SuperHero from "../models/SuperHero.mjs";
+import IRepository from "./IRepository.mjs";
+
+class SuperHeroRepository extends IRepository {
+    async obtenerTodos() {
+        return await SuperHero.find();
+    }
+
+    async obtenerPorId(id) {
+
+        //return await SuperHero.findOne({id});
+        return await SuperHero.findById(id);
+    }
+
+    async obtenerMayoresDe30() {
+        return await SuperHero.find({ edad: { $gt: 30 } });
+    }
+
+    async buscarPorAtributo(atributo, valor) {
+        // Obtener el tipo real del atributo en el schema en models
+        const tipo = SuperHero.schema.path(atributo)?.instance; // "String", "Number", etc.
+
+        // Convertir valor al tipo correspondiente
+        let filtroValor;
+        if (tipo === "Number") {
+            filtroValor = Number(valor);
+        } else {
+            filtroValor = new RegExp(`^${valor}$`, "i");
+        }
+
+        const doc = await SuperHero.find({ [atributo]: filtroValor });
+        return doc;
+    }
+}
+
+export default SuperHeroRepository;
