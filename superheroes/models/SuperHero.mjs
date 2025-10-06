@@ -8,10 +8,10 @@ const superheroSchema = new mongoose.Schema({
     edad: { type: Number, min: 0 },
     planetaOrigen: { type: String, default: 'Desconocido' },
     debilidad: [String],
-    poder: [String],
+    poderes: [String],
     habilidadEspecial: [String],
-    aliado: [String],
-    enemigo: [String],
+    aliados: [String],
+    enemigos: [String],
     createdAt: { type: Date, default: Date.now },
     creador: [String],
 });
